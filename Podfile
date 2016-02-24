@@ -8,6 +8,7 @@ target 'inventory' do
     pod 'Alamofire'
     pod 'Realm'
     pod 'RealmSwift'
+    pod 'ObjectMapper', '~> 1.1'
     
 end
 
