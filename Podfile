@@ -6,7 +6,9 @@ use_frameworks!
 target 'inventory' do
 
     pod 'Alamofire'
-
+    pod 'Realm'
+    pod 'RealmSwift'
+    
 end
 
 target 'inventoryTests' do
