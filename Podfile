@@ -9,6 +9,7 @@ target 'inventory' do
     pod 'Realm'
     pod 'RealmSwift'
     pod 'ObjectMapper', '~> 1.1'
+    pod 'BusyNavigationBar'
     
 end
 

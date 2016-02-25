@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IndexArticlesViewController: UITableViewController {
+class IndexArticlesViewController: INVTableViewController {
 
     var articlesService : ArticlesService!
     var detailViewController: DetailViewController? = nil
@@ -37,20 +37,23 @@ class IndexArticlesViewController: UITableViewController {
         if let split = self.splitViewController {
             let controllers = split.viewControllers
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
-        }
+        }                
         
         indexArticles()
     }
     
     func indexArticles(){
         
+        self.startLoader()
         articlesService.indexArticles({ (response) -> Void in
             
             self.articles = response
             self.tableView.reloadData()
+            self.stopLoader()
             
             }) { (error) -> Void in
-                
+
+                self.stopLoader()
         }
     }
 

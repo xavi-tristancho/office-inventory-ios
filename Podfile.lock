@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (3.2.0)
+  - BusyNavigationBar (1.1.0)
   - ObjectMapper (1.1.5)
   - Realm (0.98.2):
     - Realm/Headers (= 0.98.2)
@@ -9,12 +10,14 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - BusyNavigationBar
   - ObjectMapper (~> 1.1)
   - Realm
   - RealmSwift
 
 SPEC CHECKSUMS:
   Alamofire: 4da478599fccddff361205c8929333d7fe18dceb
+  BusyNavigationBar: cde4cbb450b58448204d5ab87f2dce07b4f0d7e1
   ObjectMapper: 528b1a6677a6acac7747edd508576983e76a9148
   Realm: 88a147fe04b8f07191a676b15c779b2b448991de
   RealmSwift: 9907c7415b3e19ef2ab9f89878fc890f03f93aea
