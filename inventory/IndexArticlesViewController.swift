@@ -1,5 +1,5 @@
 //
-//  MasterViewController.swift
+//  IndexArticlesViewController.swift
 //  inventory
 //
 //  Created by Xavier Tristancho Bordoy on 24/2/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MasterViewController: UITableViewController {
+class IndexArticlesViewController: UITableViewController {
 
     var articlesService : ArticlesService!
     var detailViewController: DetailViewController? = nil
