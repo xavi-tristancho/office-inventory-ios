@@ -8,9 +8,23 @@
 
 import Foundation
 import RealmSwift
+import ObjectMapper
 
 class Provider: Object {
 
     dynamic var id   = 0
     dynamic var name = ""
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+    
+    required convenience init?(_ map: Map) {
+        self.init()
+    }
+    
+    func mapping(map: Map) {
+        id   <- map["id"]
+        name <- map["name"]
+    }
 }

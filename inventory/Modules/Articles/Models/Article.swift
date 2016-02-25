@@ -14,6 +14,7 @@ class Article: Object, Mappable {
     
     dynamic var id            = 0
     dynamic var family        : Family? = nil
+    dynamic var provider      : Provider? = nil
     dynamic var name          = ""
     dynamic var reference     = ""
     dynamic var purchasePrice = 0
@@ -34,7 +35,7 @@ class Article: Object, Mappable {
     func mapping(map: Map) {
         id            <- map["id"]
         family        <- map["family"]
-//        provider      <- map["provider"]
+        provider      <- map["provider"]
         name          <- map["name"]
         reference     <- map["reference"]
         purchasePrice <- map["purchase_price"]
