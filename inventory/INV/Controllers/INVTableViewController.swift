@@ -37,5 +37,14 @@ class INVTableViewController: UITableViewController {
     
     func stopLoader(){
         self.navigationController?.navigationBar.stop()
+        self.refreshControl?.endRefreshing()
+    }
+    
+    func setUpRefreshControl(selector: Selector){
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.backgroundColor = UIColor.clearColor()
+        self.refreshControl?.tintColor = UIColor.blackColor()
+        self.refreshControl?.addTarget(self, action: selector, forControlEvents: UIControlEvents.ValueChanged)
     }
 }

@@ -30,6 +30,8 @@ class IndexArticlesViewController: INVTableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.setUpRefreshControl("indexArticles")
 
 //        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
 //        self.navigationItem.rightBarButtonItem = addButton
@@ -49,7 +51,7 @@ class IndexArticlesViewController: INVTableViewController {
             
             self.articles = response
             self.tableView.reloadData()
-            self.stopLoader()
+            self.stopLoader()            
             
             }) { (error) -> Void in
 
