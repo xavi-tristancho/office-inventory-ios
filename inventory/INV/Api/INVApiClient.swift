@@ -18,11 +18,12 @@ class INVApiClient: NSObject {
     
     func request(method: Alamofire.Method,
         uri: String,
-        parameters: NSDictionary,
+        parameters: NSDictionary?,
+        encoding: Alamofire.ParameterEncoding,
         success: (response: AnyObject!) -> Void,
         failure: (error: NSError?) -> Void){
             
-            Alamofire.request(method, baseURLString + uri, parameters: parameters as? [String : AnyObject], headers: headers, encoding: .JSON).validate().responseJSON { response in
+            Alamofire.request(method, baseURLString + uri, parameters: parameters as? [String : AnyObject], headers: headers, encoding: encoding).validate().responseJSON { response in
                 
                 switch response.result {
                 case .Success:
