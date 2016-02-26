@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import ObjectMapper
 
-class Provider: Object {
+class Provider: Object, Mappable {
 
     dynamic var id   = 0
     dynamic var name = ""
