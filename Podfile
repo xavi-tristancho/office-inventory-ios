@@ -10,6 +10,7 @@ target 'inventory' do
     pod 'RealmSwift'
     pod 'ObjectMapper', '~> 1.1'
     pod 'BusyNavigationBar'
+    pod 'Eureka', '~> 1.3'
     
 end
 
