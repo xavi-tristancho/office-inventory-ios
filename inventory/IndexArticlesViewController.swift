@@ -11,7 +11,7 @@ import UIKit
 class IndexArticlesViewController: INVTableViewController {
 
     var articlesService : ArticlesService!
-    var detailViewController: DetailViewController? = nil
+    var detailViewController: ShowArticleViewController? = nil
     var articles = [Article]()
     
     required init?(coder aDecoder: NSCoder) {
@@ -38,7 +38,7 @@ class IndexArticlesViewController: INVTableViewController {
         
         if let split = self.splitViewController {
             let controllers = split.viewControllers
-            self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+            self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? ShowArticleViewController
         }                
         
         indexArticles(true)
