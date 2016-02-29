@@ -27,6 +27,8 @@ class INVTableViewController: UITableViewController, Loadable {
     
     func customInit(){
         options = BusyNavigationBarOptions()
+        options.animationType = .Stripes
+        options.color = UIColor(hexString: "#fff")
         navigation = self.navigationController
     }
     
