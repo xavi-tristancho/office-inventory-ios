@@ -27,6 +27,6 @@ extension Loadable {
     
     func stopLoader(){
         navigation.navigationBar.stop()
-        refresh!.endRefreshing()
+        refresh?.endRefreshing()
     }
 }
