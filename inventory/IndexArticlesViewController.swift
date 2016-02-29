@@ -14,17 +14,8 @@ class IndexArticlesViewController: INVTableViewController {
     var detailViewController: ShowArticleViewController? = nil
     var articles = [Article]()
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        customInit()
-    }
-    
-    override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        customInit()
-    }
-    
-    func customInit(){
+    override func customInit(){
+        super.customInit()
         articlesService = ArticlesService()
     }
 
@@ -55,7 +46,7 @@ class IndexArticlesViewController: INVTableViewController {
             
             self.articles = response
             self.tableView.reloadData()
-            self.stopLoader()            
+            self.stopLoader()
             
             }) { (error) -> Void in
 
