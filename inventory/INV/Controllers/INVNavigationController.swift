@@ -25,7 +25,7 @@ class INVNavigationController: UINavigationController {
     
     func setUpBackButtonImage(){
         let backButton = UIBarButtonItem(image:UIImage(named: "back-button"), style:.Plain, target:self, action: "popViewController");
-        backButton.tintColor = UIColor(hexString: "ffc952")
+        backButton.tintColor = UIColor(hexString: "fff")
         navigationItem.leftBarButtonItem = backButton
     }
     
