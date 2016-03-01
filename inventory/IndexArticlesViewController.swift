@@ -13,6 +13,7 @@ class IndexArticlesViewController: INVTableViewController {
     var articlesService : ArticlesService!
     var detailViewController: ShowArticleViewController? = nil
     var articles = [Article]()
+    var tappedIndexPath : NSIndexPath?
     
     override func customInit(){
         super.customInit()
@@ -57,6 +58,10 @@ class IndexArticlesViewController: INVTableViewController {
     override func viewWillAppear(animated: Bool) {
         self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
         super.viewWillAppear(animated)
+        
+        if tappedIndexPath != nil{
+            self.tableView.reloadRowsAtIndexPaths([tappedIndexPath!], withRowAnimation: .None)
+        }
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -84,6 +89,8 @@ class IndexArticlesViewController: INVTableViewController {
 
         let article = articles[indexPath.row]
         cell.textLabel!.text = article.name
+        
+        tappedIndexPath = indexPath
         
         return cell
     }
