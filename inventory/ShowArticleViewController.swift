@@ -18,7 +18,17 @@ class ShowArticleViewController: FormViewController {
         super.viewDidLoad()
         form  +++=
             
-        TextRow("name") {
+        LabelRow("family") {
+            $0.title = "Familia"
+            $0.value = article!.family?.name
+        }
+            
+        <<< LabelRow("provider") {
+            $0.title = "Proveedor"
+            $0.value = article!.provider?.name
+        }
+            
+        <<< TextRow("name") {
             $0.title = "Nombre"
             $0.value = article!.name
         }
