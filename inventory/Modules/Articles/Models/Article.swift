@@ -17,10 +17,10 @@ class Article: Object, Mappable {
     dynamic var provider      : Provider? = nil
     dynamic var name          = ""
     dynamic var reference     = ""
-    dynamic var purchasePrice = 0
-    dynamic var costPrice     = 0
-    dynamic var sellPrice     = 0
-    dynamic var quantity      = 0
+    dynamic var purchasePrice = 0.0
+    dynamic var costPrice     = 0.0
+    dynamic var sellPrice     = 0.0
+    dynamic var quantity      = 0.0
     dynamic var createdAt     = NSDate(timeIntervalSince1970: 1)
     dynamic var updatedAt     = NSDate(timeIntervalSince1970: 1)
     
@@ -30,6 +30,22 @@ class Article: Object, Mappable {
     
     required convenience init?(_ map: Map) {
         self.init()
+    }
+    
+    convenience init(article: Article, eurekaDictionary: [String : Any?]){
+        self.init()
+        
+        self.id = article.id
+        self.family = article.family
+        self.provider = article.provider
+        self.name = eurekaDictionary["name"] as! String
+        self.reference = eurekaDictionary["reference"] as! String
+        self.purchasePrice = eurekaDictionary["purchase_price"] as! Double
+        self.costPrice = eurekaDictionary["cost_price"] as! Double
+        self.sellPrice = eurekaDictionary["sell_price"] as! Double
+        self.quantity = eurekaDictionary["quantity"] as! Double
+        self.createdAt = article.createdAt
+        self.updatedAt = article.updatedAt
     }
     
     func mapping(map: Map) {
