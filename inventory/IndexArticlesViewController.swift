@@ -10,9 +10,11 @@ import UIKit
 
 class IndexArticlesViewController: INVTableViewController {
 
+    let searchController = UISearchController(searchResultsController: nil)
     var articlesService : ArticlesService!
     var detailViewController: ShowArticleViewController? = nil
     var articles = [Article]()
+    var filteredArticles = [Article]()
     var tappedIndexPath : NSIndexPath?
     
     override func customInit(){
@@ -34,6 +36,23 @@ class IndexArticlesViewController: INVTableViewController {
         }                
         
         indexArticles(true)
+        
+        setUpSearchController()
+    }
+    
+    func setUpSearchController(){
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        definesPresentationContext = true
+        tableView.tableHeaderView = searchController.searchBar
+    }
+    
+    func filterContentForSearchText(searchText: String, scope: String = "All") {
+        filteredArticles = articles.filter { article in
+            return article.name.lowercaseString.containsString(searchText.lowercaseString)
+        }
+        
+        tableView.reloadData()
     }
     
     func indexArticlesApi(){
@@ -46,6 +65,7 @@ class IndexArticlesViewController: INVTableViewController {
         articlesService.indexArticles(offline, success: { (response) -> Void in
             
             self.articles = response
+            self.articles.sortInPlace { $0.name < $1.name }
             self.tableView.reloadData()
             self.stopLoader()
             
@@ -67,9 +87,10 @@ class IndexArticlesViewController: INVTableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
-                let object = articles[indexPath.row]
+                tappedIndexPath = indexPath
+                let article = getArticleForCell(indexPath)
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! ShowArticleViewController
-                controller.article = object
+                controller.article = article
             }
         }
     }
@@ -81,18 +102,38 @@ class IndexArticlesViewController: INVTableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if searchController.active && searchController.searchBar.text != "" {
+            return filteredArticles.count
+        }
         return articles.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
 
-        let article = articles[indexPath.row]
-        cell.textLabel!.text = article.name
+        let article = getArticleForCell(indexPath)
         
-        tappedIndexPath = indexPath
+        cell.textLabel!.text = article.name
         
         return cell
     }
+    
+    func getArticleForCell(indexPath: NSIndexPath) -> Article {
+        
+        let article : Article
+        
+        if searchController.active && searchController.searchBar.text != "" {
+            article = filteredArticles[indexPath.row]
+        } else {
+            article = articles[indexPath.row]
+        }
+        
+        return article;
+    }
 }
 
+extension IndexArticlesViewController: UISearchResultsUpdating {
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
+}
