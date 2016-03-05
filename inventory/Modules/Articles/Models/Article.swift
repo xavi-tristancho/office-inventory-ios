@@ -20,7 +20,7 @@ class Article: Object, Mappable {
     dynamic var purchasePrice = 0.0
     dynamic var costPrice     = 0.0
     dynamic var sellPrice     = 0.0
-    dynamic var quantity      = 0.0
+    dynamic var quantity      = 0
     dynamic var createdAt     = NSDate(timeIntervalSince1970: 1)
     dynamic var updatedAt     = NSDate(timeIntervalSince1970: 1)
     
@@ -59,7 +59,7 @@ class Article: Object, Mappable {
             self.sellPrice = sellPrice
         }
         
-        if let quantity = eurekaDictionary["quantity"] as? Double {
+        if let quantity = eurekaDictionary["quantity"] as? Int {
             self.quantity = quantity
         }
         

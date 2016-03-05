@@ -63,7 +63,7 @@ class ShowArticleViewController: FormViewController {
                     $0.value = article!.sellPrice
                 }
                 
-                <<< DecimalRow("quantity") {
+                <<< IntRow("quantity") {
                     $0.title = "Cantidad"
                     $0.value = article!.quantity
             }
