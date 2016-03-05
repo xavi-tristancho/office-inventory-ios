@@ -38,12 +38,31 @@ class Article: Object, Mappable {
         self.id = article.id
         self.family = article.family
         self.provider = article.provider
-        self.name = eurekaDictionary["name"] as! String
-        self.reference = eurekaDictionary["reference"] as! String
-        self.purchasePrice = eurekaDictionary["purchase_price"] as! Double
-        self.costPrice = eurekaDictionary["cost_price"] as! Double
-        self.sellPrice = eurekaDictionary["sell_price"] as! Double
-        self.quantity = eurekaDictionary["quantity"] as! Double
+        
+        if let name = eurekaDictionary["name"] as? String {
+            self.name = name
+        }
+        
+        if let reference = eurekaDictionary["reference"] as? String {
+            self.reference = reference
+        }
+        
+        if let purchasePrice = eurekaDictionary["purchase_price"] as? Double {
+            self.purchasePrice = purchasePrice
+        }
+        
+        if let costPrice = eurekaDictionary["cost_price"] as? Double {
+            self.costPrice = costPrice
+        }
+        
+        if let sellPrice = eurekaDictionary["sell_price"] as? Double {
+            self.sellPrice = sellPrice
+        }
+        
+        if let quantity = eurekaDictionary["quantity"] as? Double {
+            self.quantity = quantity
+        }
+        
         self.createdAt = article.createdAt
         self.updatedAt = article.updatedAt
     }
