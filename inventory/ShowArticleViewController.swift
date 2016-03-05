@@ -13,12 +13,19 @@ import RealmSwift
 class ShowArticleViewController: FormViewController {
 
     var article: Article?
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        save()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if (article != nil)
         {
+            title = article!.name
+            
             form  +++=
                 
                 LabelRow("family") {
@@ -60,28 +67,24 @@ class ShowArticleViewController: FormViewController {
                     $0.title = "Cantidad"
                     $0.value = article!.quantity
             }
-            
-            form +++ Section("")
-                
-                <<< ButtonRow("Rows") {
-                    $0.title = "Guardar"
-                    $0.onCellSelection(didTapSaveButton)
-            }
         }
     }
     
-    func didTapSaveButton(cell: ButtonCellOf<String>, row: ButtonRow) {
+    func save(){
         
-        let values = form.values()
-        let editedArticle = Article(article: article!, eurekaDictionary: values)
-        
-        let uiRealm = try! Realm()
-        do {
-            try uiRealm.write({ () -> Void in
+        if (article != nil)
+        {            
+            let values = form.values()
+            let editedArticle = Article(article: article!, eurekaDictionary: values)
+            
+            let uiRealm = try! Realm()
+            do {
+                try uiRealm.write({ () -> Void in
                     uiRealm.add(editedArticle, update: true)
-            })
-        } catch {
-            print("DB Realm insert failed")
+                })
+            } catch {
+                print("DB Realm insert failed")
+            }
         }
     }
 }
