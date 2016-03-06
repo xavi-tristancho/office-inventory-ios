@@ -10,7 +10,7 @@ import Alamofire
 
 class INVApiClient: NSObject {
 
-    let baseURLString = "http://192.168.1.105:3000/api/"
+    let baseURLString = "http://52.48.158.208:3000/api/"
     
     let headers = [
         "Content-Type": "application/json"
