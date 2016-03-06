@@ -80,4 +80,19 @@ class Article: Object, Mappable {
         createdAt     <- map["created_at"]
         updatedAt     <- map["updated_at"]
     }
+    
+    func getJson() -> NSDictionary {
+        
+        let dict : NSDictionary = [
+            "id" : self.id,
+            "name" : self.name,
+            "reference" : self.reference,
+            "purchase_price" : self.purchasePrice,
+            "cost_price" : self.costPrice,
+            "sell_price" : self.sellPrice,
+            "quantity" : self.quantity
+        ]
+        
+        return dict
+    }
 }

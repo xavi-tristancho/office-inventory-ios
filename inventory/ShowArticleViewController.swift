@@ -85,6 +85,13 @@ class ShowArticleViewController: FormViewController {
             } catch {
                 print("DB Realm insert failed")
             }
+            
+            let articleService = ArticlesService()
+            articleService.updateArticle(article!, success: { (response) -> Void in
+                
+                }, failure: { (error) -> Void in
+                    
+            })
         }
     }
 }
