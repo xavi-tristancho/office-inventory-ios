@@ -130,6 +130,21 @@ class IndexArticlesViewController: INVTableViewController {
         
         return article;
     }
+    
+    
+    @IBAction func didTapSeeTotal(sender: UIBarButtonItem) {
+        
+        var total = 0.0
+        
+        for article in articles {
+            total =  total + Double(article.quantity) * article.costPrice
+        }
+        
+        let ac = UIAlertController(title: "Total Inventario", message: "Tienes un total de \(total)€ en stock", preferredStyle: .Alert)
+        ac.addAction(UIAlertAction(title: "Cerrar", style: .Default, handler: nil))
+        presentViewController(ac, animated: true, completion: nil)
+        
+    }
 }
 
 extension IndexArticlesViewController: UISearchResultsUpdating {
