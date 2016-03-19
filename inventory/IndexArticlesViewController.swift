@@ -109,11 +109,13 @@ class IndexArticlesViewController: INVTableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+
+        let cellIdentifier = "Cell"
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! ArticleTableViewCell
 
         let article = getArticleForCell(indexPath)
         
-        cell.textLabel!.text = article.name
+        cell.configure(article)
         
         return cell
     }
@@ -144,6 +146,28 @@ class IndexArticlesViewController: INVTableViewController {
         ac.addAction(UIAlertAction(title: "Cerrar", style: .Default, handler: nil))
         presentViewController(ac, animated: true, completion: nil)
         
+    }
+    
+    @IBAction func didTapSyncronize(sender: UIBarButtonItem) {
+        
+        var index = 0
+        print(articles.count)
+        for article in articles {
+            self.startLoader()
+            articlesService.updateArticle(article, success: { () -> Void in
+                index++
+                print(index);
+                if index == self.articles.count {
+                    self.stopLoader()
+                }
+            }, failure: { (error) -> Void in
+                index++
+                print(index);
+                if index == self.articles.count {
+                    self.stopLoader()
+                }
+            })
+        }
     }
 }
 
