@@ -42,14 +42,17 @@ class ArticlesService: INVApiClient {
         }
     }
     
-    func updateArticle(article: Article, success: (response: [Article]) -> Void, failure: (error: NSError?) -> Void) {
+    func updateArticle(article: Article, success: () -> Void, failure: (error: NSError?) -> Void) {
         
         let json = article.getJson()
         
         self.request(.PUT, uri: "articles/\(article.id)", parameters: json, encoding: .JSON, success: { (response) -> Void in
             
+                success()
+            
             }) { (error) -> Void in
-                
+            
+                failure(error: error)
         }
     }
 }
