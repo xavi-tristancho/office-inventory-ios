@@ -23,9 +23,7 @@ class ShowArticleViewController: FormViewController {
         super.viewDidLoad()
         
         if (article != nil)
-        {
-            title = article!.name
-            
+        {            
             form  +++=
                 
                 LabelRow("family") {
