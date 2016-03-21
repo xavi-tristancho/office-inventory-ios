@@ -76,8 +76,9 @@ class IndexArticlesViewController: INVTableViewController {
     }
 
     override func viewWillAppear(animated: Bool) {
-        self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
         super.viewWillAppear(animated)
+        
+        self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
         
         if tappedIndexPath != nil{
             self.tableView.reloadRowsAtIndexPaths([tappedIndexPath!], withRowAnimation: .None)
