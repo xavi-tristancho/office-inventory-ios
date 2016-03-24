@@ -23,6 +23,7 @@ class Article: Object, Mappable {
     dynamic var quantity      = 0
     dynamic var createdAt     = NSDate(timeIntervalSince1970: 1)
     dynamic var updatedAt     = NSDate(timeIntervalSince1970: 1)
+    dynamic var updated       = false
     
     override static func primaryKey() -> String? {
         return "id"
@@ -65,6 +66,7 @@ class Article: Object, Mappable {
         
         self.createdAt = article.createdAt
         self.updatedAt = article.updatedAt
+        self.updated = article.updated;
     }
     
     func mapping(map: Map) {
