@@ -152,22 +152,25 @@ class IndexArticlesViewController: INVTableViewController {
     @IBAction func didTapSyncronize(sender: UIBarButtonItem) {
         
         var index = 0
-        print(articles.count)
-        for article in articles {
-            self.startLoader()
-            articlesService.updateArticle(article, success: { () -> Void in
-                index++
-                print(index);
-                if index == self.articles.count {
-                    self.stopLoader()
-                }
-            }, failure: { (error) -> Void in
-                index++
-                print(index);
-                if index == self.articles.count {
-                    self.stopLoader()
-                }
-            })
+
+        let notUpdatedArticles = INVSync.findRecords(Article.self, filter: NSPredicate(format: "updated = false")) as! [Article]
+        let notUpdatedArticlesCount = notUpdatedArticles.count
+        
+        if (notUpdatedArticlesCount > 0) {
+            for article in notUpdatedArticles {
+                self.startLoader()
+                articlesService.updateArticle(article, success: { () -> Void in
+                    index++
+                    if index == notUpdatedArticlesCount {
+                        self.stopLoader()
+                    }
+                }, failure: { (error) -> Void in
+                    index++
+                    if index == notUpdatedArticlesCount {
+                        self.stopLoader()
+                    }
+                })
+            }
         }
     }
 }

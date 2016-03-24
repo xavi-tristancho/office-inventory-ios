@@ -73,19 +73,10 @@ class ShowArticleViewController: FormViewController {
         if (article != nil)
         {            
             let values = form.values()
-            let editedArticle = Article(article: article!, eurekaDictionary: values)
-            
-            let uiRealm = try! Realm()
-            do {
-                try uiRealm.write({ () -> Void in
-                    uiRealm.add(editedArticle, update: true)
-                })
-            } catch {
-                print("DB Realm insert failed")
-            }
+            let editedArticle = Article(article: article!, eurekaDictionary: values)                        
             
             let articleService = ArticlesService()
-            articleService.updateArticle(article!, success: { (response) -> Void in
+            articleService.updateArticle(editedArticle, success: { (response) -> Void in
                 
                 }, failure: { (error) -> Void in
                     

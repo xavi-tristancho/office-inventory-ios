@@ -45,13 +45,32 @@ class ArticlesService: INVApiClient {
     func updateArticle(article: Article, success: () -> Void, failure: (error: NSError?) -> Void) {
         
         let json = article.getJson()
+        let uiRealm = try! Realm();
         
         self.request(.PUT, uri: "articles/\(article.id)", parameters: json, encoding: .JSON, success: { (response) -> Void in
             
-                success()
+            do {
+                try uiRealm.write({ () -> Void in
+                    article.updated = true;
+                    uiRealm.add(article, update: true)
+                })
+            } catch {
+                print("DB Realm insert failed")
+            }
+            
+            success()
             
             }) { (error) -> Void in
             
+                do {
+                    try uiRealm.write({ () -> Void in
+                        article.updated = false;
+                        uiRealm.add(article, update: true)
+                    })
+                } catch {
+                    print("DB Realm insert failed")
+                }
+                
                 failure(error: error)
         }
     }
