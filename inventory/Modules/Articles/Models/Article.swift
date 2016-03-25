@@ -66,7 +66,7 @@ class Article: Object, Mappable {
         
         self.createdAt = article.createdAt
         self.updatedAt = article.updatedAt
-        self.updated = article.updated;
+        self.updated = false;
     }
     
     func mapping(map: Map) {
