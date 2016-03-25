@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import netfox
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -17,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         INVSync.migrate()
+        NFX.sharedInstance().start()
         
         // Override point for customization after application launch.
         let splitViewController = self.window!.rootViewController as! UISplitViewController

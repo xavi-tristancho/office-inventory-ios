@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import JLToast
 
 class IndexArticlesViewController: INVTableViewController {
 
@@ -160,6 +161,8 @@ class IndexArticlesViewController: INVTableViewController {
     }
     
     @IBAction func didTapSynchronize(sender: UIBarButtonItem?) {
+        
+        JLToast.makeText("Sincronizando articulos con el servidor.").show()
         
         var index = 0
         let articlesToUpdate = INVSync.findRecords(Article.self, filter: NSPredicate(format: "updated = false")) as! [Article]
