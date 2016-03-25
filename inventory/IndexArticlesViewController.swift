@@ -14,8 +14,7 @@ class IndexArticlesViewController: INVTableViewController {
     var articlesService : ArticlesService!
     var detailViewController: ShowArticleViewController? = nil
     var articles = [Article]()
-    var filteredArticles = [Article]()
-    var tappedIndexPath : NSIndexPath?
+    var filteredArticles = [Article]()    
     
     override func customInit(){
         super.customInit()
@@ -26,9 +25,6 @@ class IndexArticlesViewController: INVTableViewController {
         super.viewDidLoad()
         
         self.setUpRefreshControl("indexArticlesApi")
-
-//        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
-//        self.navigationItem.rightBarButtonItem = addButton
         
         if let split = self.splitViewController {
             let controllers = split.viewControllers
@@ -38,6 +34,9 @@ class IndexArticlesViewController: INVTableViewController {
         indexArticles(true)
         
         setUpSearchController()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadIndexPath:", name:"articleDidUpdate", object: nil)
+
     }
     
     func setUpSearchController(){
@@ -55,8 +54,16 @@ class IndexArticlesViewController: INVTableViewController {
         tableView.reloadData()
     }
     
-    func indexArticlesApi(){
-        indexArticles(false)
+    func indexArticlesApi() {
+        
+        let articlesToUpdate = INVSync.findRecords(Article.self, filter: NSPredicate(format: "updated = false")) as! [Article]
+        
+        if(articlesToUpdate.count == 0) {
+            indexArticles(false)
+        }
+        else {
+            didTapSynchronize(nil);
+        }
     }
     
     func indexArticles(offline: Bool){
@@ -70,7 +77,7 @@ class IndexArticlesViewController: INVTableViewController {
             self.stopLoader()
             
             }) { (error) -> Void in
-
+                
                 self.stopLoader()
         }
     }
@@ -79,24 +86,28 @@ class IndexArticlesViewController: INVTableViewController {
         super.viewWillAppear(animated)
         
         self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
-        
-        if tappedIndexPath != nil{
-            self.tableView.reloadRowsAtIndexPaths([tappedIndexPath!], withRowAnimation: .None)
-        }
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
-                tappedIndexPath = indexPath
+
                 let article = getArticleForCell(indexPath)
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! ShowArticleViewController
                 controller.article = article
+                controller.indexPath = indexPath
             }
         }
     }
 
     // MARK: - Table View
+    
+    func reloadIndexPath(notification: NSNotification) {
+        
+        let indexPath = notification.object as? NSIndexPath
+        self.tableView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: .None)
+    }
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -134,7 +145,6 @@ class IndexArticlesViewController: INVTableViewController {
         return article;
     }
     
-    
     @IBAction func didTapSeeTotal(sender: UIBarButtonItem) {
         
         var total = 0.0
@@ -149,28 +159,26 @@ class IndexArticlesViewController: INVTableViewController {
         
     }
     
-    @IBAction func didTapSyncronize(sender: UIBarButtonItem) {
+    @IBAction func didTapSynchronize(sender: UIBarButtonItem?) {
         
         var index = 0
-
-        let notUpdatedArticles = INVSync.findRecords(Article.self, filter: NSPredicate(format: "updated = false")) as! [Article]
-        let notUpdatedArticlesCount = notUpdatedArticles.count
+        let articlesToUpdate = INVSync.findRecords(Article.self, filter: NSPredicate(format: "updated = false")) as! [Article]
         
-        if (notUpdatedArticlesCount > 0) {
-            for article in notUpdatedArticles {
-                self.startLoader()
-                articlesService.updateArticle(article, success: { () -> Void in
-                    index++
-                    if index == notUpdatedArticlesCount {
-                        self.stopLoader()
-                    }
-                }, failure: { (error) -> Void in
-                    index++
-                    if index == notUpdatedArticlesCount {
-                        self.stopLoader()
-                    }
-                })
+        func stopLoaderIfEnded() {
+            if index == articlesToUpdate.count {
+                self.stopLoader()
             }
+        }
+        
+        for article in articlesToUpdate {
+            self.startLoader()
+            articlesService.updateArticle(article, success: { () -> Void in
+                index++
+                stopLoaderIfEnded()
+            }, failure: { (error) -> Void in
+                index++
+                stopLoaderIfEnded()
+            })
         }
     }
 }

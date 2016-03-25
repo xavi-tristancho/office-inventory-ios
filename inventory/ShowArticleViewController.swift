@@ -13,6 +13,7 @@ import RealmSwift
 class ShowArticleViewController: FormViewController {
 
     var article: Article?
+    var indexPath : NSIndexPath?
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
@@ -78,8 +79,11 @@ class ShowArticleViewController: FormViewController {
             let articleService = ArticlesService()
             articleService.updateArticle(editedArticle, success: { (response) -> Void in
                 
+                NSNotificationCenter.defaultCenter().postNotificationName("articleDidUpdate", object: self.indexPath)
+                
                 }, failure: { (error) -> Void in
                     
+                    NSNotificationCenter.defaultCenter().postNotificationName("articleDidUpdate", object: self.indexPath)
             })
         }
     }

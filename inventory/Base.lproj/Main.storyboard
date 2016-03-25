@@ -206,7 +206,7 @@
                         <barButtonItem key="leftBarButtonItem" title="Sincronizar" id="z3Z-qy-1jl">
                             <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <action selector="didTapSyncronize:" destination="7bK-jq-Zjz" id="Rv7-uc-ZkS"/>
+                                <action selector="didTapSynchronize:" destination="7bK-jq-Zjz" id="69r-WY-hck"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Ver Total" id="5OL-JB-3XN">
